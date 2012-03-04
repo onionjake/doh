@@ -1,0 +1,25 @@
+{
+  "name" : "DOH password generator",
+  "version" : "0.1",
+  "description" : "Fills in passwords given salt and master password.",
+  "background_page" : "background.html",
+  "page_action" :
+  {
+    "default_icon" : "doh-19.png",
+    "default_title" : "Generated a password for this page!"
+  },
+  "content_scripts" : [
+    {
+      "matches" : [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js" : ["doh.js", "jquery-1.7.1.min.js","2.5.3-crypto-sha1-hmac-pbkdf2.js", "content.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    }
+  ],
+  "icons" : {
+    "48" : "doh-48.png"
+  }
+}
