@@ -1,5 +1,24 @@
 #!/usr/bin/env ruby
 
+# Copyright (c) 2012 Jake Willoughby
+# 
+# This file is part of DOH.
+# 
+# DOH is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+# 
+# DOH is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with DOH.  See gpl3.txt. If not, see <http://www.gnu.org/licenses/>.
+
+
+
 # CADE machines install is broken
 # Add the following paths to $LOAD_PATH
 $:.unshift "/usr/local/stow/ruby/i386_linux22/ruby-1.8.7-p72/lib/ruby/1.8"

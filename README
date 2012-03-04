@@ -11,3 +11,20 @@ Here is the algorithm in a nutshell:
 6. If password cannot be found after 5 rotations, rehash and search again.
 
 The expected number of characters needed to fulfill typical password requirements is 10 characters. Determining each domain's expected number of minimum characters to meet requirements can be done using the coupon collectors problem.
+
+Copyright (c) 2012 Jake Willoughby
+
+This file is part of DOH.
+
+DOH is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+DOH is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with DOH.  See gpl3.txt. If not, see <http://www.gnu.org/licenses/>.

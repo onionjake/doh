@@ -1,4 +1,25 @@
-// Thanks to http://stackoverflow.com/questions/950087/include-javascript-file-inside-javascript-file
+
+// Copyright (c) 2012 Jake Willoughby
+// 
+// This file is part of DOH.
+// 
+// DOH is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// any later version.
+// 
+// DOH is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with DOH.  See gpl3.txt. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+
+// loadScript function thanks to http://stackoverflow.com/questions/950087/include-javascript-file-inside-javascript-file
 function loadScript(url, callback)
 {
    // adding the script tag to the head as suggested before
@@ -15,6 +36,8 @@ function loadScript(url, callback)
    // fire the loading
    head.appendChild(script);
 }
+
+
 var lower   = "abcdefghijklmnopqrstuvwxyz";
 var upper   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 var num     = "0123456789";
