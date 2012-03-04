@@ -16,27 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with DOH.  See gpl3.txt. If not, see <http://www.gnu.org/licenses/>.
 
-
-
-
-// loadScript function thanks to http://stackoverflow.com/questions/950087/include-javascript-file-inside-javascript-file
-function loadScript(url, callback)
-{
-   // adding the script tag to the head as suggested before
-   var head = document.getElementsByTagName('head')[0];
-   var script = document.createElement('script');
-   script.type = 'text/javascript';
-   script.src = url;
-
-   // then bind the event to the callback function 
-   // there are several events for cross browser compatibility
-   script.onreadystatechange = callback;
-   script.onload = callback;
-
-   // fire the loading
-   head.appendChild(script);
-}
-
+// Requires http://crypto-js.googlecode.com/files/2.5.3-crypto-sha1-hmac-pbkdf2.js to be included first.
 
 var lower   = "abcdefghijklmnopqrstuvwxyz";
 var upper   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -110,10 +90,3 @@ function gen_password(password,len) {
     return result;
 }
 
-function afterLoad() {
-
-  // Done Loading reqs!
-
-}
-
-loadScript("http://crypto-js.googlecode.com/files/2.5.3-crypto-sha1-hmac-pbkdf2.js", afterLoad);
