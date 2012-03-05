@@ -22,16 +22,19 @@
     <script>
       // TODO: change this to be hash(salt + password) instead of raw password
       var DOHmaster = "";
+      var DOHsalt = "";
       function onRequest(request, sender, sendResponse) {
         if (request.command == "setMaster") {
           DOHmaster = request.password;
+          DOHsalt = request.salt;
           sendResponse({});
         }
-        else if (request.command == "masterIsSet") {
-          var rsp = {"isSet": null, "value": null};
-          rsp.isSet = DOHmaster != "";
+        else if (request.command == "popupInfo") {
+          var rsp = {"masterIsSet": null, "masterPassword": null, "salt": null};
+          rsp.masterIsSet = DOHmaster != "";
+          rsp.salt = DOHsalt;
           // TODO: Remove sending the actual password in response.  Used for debugging right now.
-          rsp.value = DOHmaster;
+          rsp.masterPassword = DOHmaster;
           sendResponse(rsp);
         }
       };

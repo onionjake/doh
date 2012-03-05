@@ -22,20 +22,23 @@
   <head>
     <script>
       function changed() {
-        var req = {"command": "setMaster", "password" : null };
+        var req = {"command": "setMaster", "salt": null, "password" : null };
         req.password = document.getElementById("DOHmaster").value;
+        req.salt = document.getElementById("DOHsalt").value;
         chrome.extension.sendRequest(req, function (response) {});
       };
     </script>
   </head>
   <body>
     Master Password: <input type="password" id="DOHmaster" onkeyup="changed()" />
+    Salt: <input type="text" id="DOHsalt" onkeyup="changed()" />
     <script>
-      chrome.extension.sendRequest({"command": "masterIsSet"}, function (response) {
-        if (response.isSet) {
+      chrome.extension.sendRequest({"command": "popupInfo"}, function (response) {
+        document.getElementById("DOHsalt").value = response.salt;
+        if (response.masterIsSet) {
           var el = document.getElementById("DOHmaster");
           // TODO: remove password value from response, used for debugging
-          el.placeholder = "<unchanged>: " + response.value;
+          el.placeholder = "<unchanged>: " + response.masterPassword;
         }
       });
     </script>
