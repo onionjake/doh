@@ -14,7 +14,7 @@
         "http://*/*",
         "https://*/*"
       ],
-      "js" : ["doh.js", "jquery-1.7.1.min.js","2.5.3-crypto-sha1-hmac-pbkdf2.js", "content.js"],
+      "js" : ["jquery-1.7.1.min.js","content.js"],
       "run_at" : "document_idle",
       "all_frames" : false
     }

@@ -14,13 +14,14 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with DOH.  See gpl3.txt. If not, see <http://www.gnu.org/licenses/>.
+//
 
 var fields = $("input[type=password]");
 if (fields.size() > 0) {
-  // Notify background page
-  chrome.extension.sendRequest({}, function(response) {});
-  
-  fields.each(function(i,e) {
-    $(e).val("hello");
+  // Ask background page for password
+  chrome.extension.sendRequest({"command": "getPassword"}, function(response) {
+    fields.each(function(i,e) {
+      $(e).val(response.password);
+    });
   });
 }
