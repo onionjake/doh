@@ -17,27 +17,30 @@
  * You should have received a copy of the GNU General Public License
  * along with DOH.  See gpl3.txt. If not, see <http://www.gnu.org/licenses/>.
 -->
+
 <html>
   <head>
     <script>
-      // TODO: change this to be hash(salt + password) instead of raw password
-      var DOHmaster = "";
-      function onRequest(request, sender, sendResponse) {
-        if (request.command == "setMaster") {
-          DOHmaster = request.password;
-          sendResponse({});
-        }
-        else if (request.command == "masterIsSet") {
-          var rsp = {"isSet": null, "value": null};
-          rsp.isSet = DOHmaster != "";
-          // TODO: Remove sending the actual password in response.  Used for debugging right now.
-          rsp.value = DOHmaster;
-          sendResponse(rsp);
-        }
+      function changed() {
+        var req = {"command": "setMaster", "password" : null };
+        req.password = document.getElementById("DOHmaster").value;
+        chrome.extension.sendRequest(req, function (response) {});
       };
-
-      // Listen for the content script to send a message to the background page.
-      chrome.extension.onRequest.addListener(onRequest);
     </script>
   </head>
+  <body>
+    Master Password: <input type="password" id="DOHmaster" onkeyup="changed()" />
+    <script>
+      chrome.extension.sendRequest({"command": "masterIsSet"}, function (response) {
+        if (response.isSet) {
+          var el = document.getElementById("DOHmaster");
+          // TODO: remove password value from response, used for debugging
+          el.placeholder = "<unchanged>: " + response.value;
+        }
+      });
+    </script>
+  </body>
 </html>
+  
+
+

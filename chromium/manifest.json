@@ -3,10 +3,10 @@
   "version" : "0.1",
   "description" : "Fills in passwords given salt and master password.",
   "background_page" : "background.html",
-  "page_action" :
-  {
-    "default_icon" : "doh-19.png",
-    "default_title" : "Generated a password for this page!"
+  "browser_action": {
+    "default_icon": "doh-19.png",
+    "default_title": "DOH password manager",
+    "default_popup": "popup.html"
   },
   "content_scripts" : [
     {
