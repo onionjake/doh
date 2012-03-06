@@ -17,6 +17,7 @@
 // along with DOH.  See gpl3.txt. If not, see <http://www.gnu.org/licenses/>.
 
 // Requires http://crypto-js.googlecode.com/files/2.5.3-crypto-sha1-hmac-pbkdf2.js to be included first.
+// Requires http://crypto-js.googlecode.com/files/2.5.3-crypto-sha1-hmac-pbkdf2.js to be included first.
 
 var lower   = "abcdefghijklmnopqrstuvwxyz";
 var upper   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -79,14 +80,19 @@ function trans_chars(str,from,to) {
   );
 }
 
-function gen_password(password,len) {
+function get_domain_reqs(domain) {
+  //TODO: parse yaml file
+  return {"use": "x,l,n,c", "exclude": " "};
+}
+
+function gen_password(hashedMaster,salt,seq,domain,len) {
     len=Math.ceil(len*6/8); 
-    var foo =  Crypto.PBKDF2(password,"salt",len, {iterations: 2000, 
+    var foo =  Crypto.PBKDF2(hashedMaster,seq + domain + salt,len, {iterations: 2000, 
             asBytes: true,
             hasher: Crypto.SHA512});
     foo =  Crypto.util.bytesToBase64(foo);
-    var set = char_set("x,l,n,c"," ");
+    var reqs = get_domain_reqs(domain);
+    var set = char_set(reqs.use, reqs.exclude);
     var result = trans_chars(foo,upper+lower+num+"+/", set);
     return result;
 }
-

@@ -19,8 +19,9 @@
 -->
 <html>
   <head>
+    <script type="text/javascript" src="2.5.3-crypto-sha1-hmac-pbkdf2.js"></script>
+    <script type="text/javascript" src="doh.js"></script>
     <script>
-      // TODO: change this to be hash(salt + password) instead of raw password
       var DOHmaster = "";
       var DOHsalt = "";
 
@@ -32,7 +33,7 @@
             //rsp.domain = sender.tab.url;
 
             //TODO: call function in doh.js to generate password
-            rsp.password = DOHsalt + DOHmaster;
+            rsp.password = gen_password(DOHmaster,DOHsalt,"0",sender.tab.url,10);
             sendResponse(rsp);
             break;
           default:
