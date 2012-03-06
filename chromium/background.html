@@ -33,15 +33,23 @@
       });
 
       function onRequest(request, sender, sendResponse) {
-        // Requests are assumed they could be malicious. 
+        // Data in request may be malicious, so beware.
         var rsp = {};
         switch (request.command) {
           case "getPassword":
-            //rsp.domain = sender.tab.url;
+            // This is assuming a remote site can NEVER arbitrarily change the top-level 
+            // domain in sender.tab.url otherwise passwords for other sites could be requested.
 
-            //TODO: call function in doh.js to generate password
-            rsp.password = gen_password(DOHmaster,DOHsalt,"0",sender.tab.url);
-            sendResponse(rsp);
+            // Match top-level domain
+            var host = sender.tab.url.match(/^[A-Za-z]+:\/\/([-A-Za-z0-9]+\.)*([-A-Za-z0-9]*\.[-A-Za-z0-9]+)/);
+            if (!(2 in host)) {
+              sendResponse({"error": "invalid command"});
+            }
+            else {
+              rsp.password = gen_password(DOHmaster,DOHsalt,"0",host[2]);
+              sendResponse(rsp);
+            }
+
             break;
           default:
             sendResponse({"error": "invalid command"});
