@@ -16,12 +16,14 @@
 // along with DOH.  See gpl3.txt. If not, see <http://www.gnu.org/licenses/>.
 //
 
-var fields = $("input[type=password]");
-if (fields.size() > 0) {
-  // Ask background page for password
-  chrome.extension.sendRequest({"command": "getPassword"}, function(response) {
-    fields.each(function(i,e) {
-      $(e).val(response.password);
+$('document').ready(function () {
+  var fields = $("input[type=password]");
+  if (fields.size() > 0) {
+    // Ask background page for password
+    chrome.extension.sendRequest({"command": "getPassword"}, function(response) {
+      fields.each(function(i,e) {
+        $(e).val(response.password);
+      });
     });
-  });
-}
+  }
+});

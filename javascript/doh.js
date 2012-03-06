@@ -16,8 +16,8 @@
 // You should have received a copy of the GNU General Public License
 // along with DOH.  See gpl3.txt. If not, see <http://www.gnu.org/licenses/>.
 
-// Requires http://crypto-js.googlecode.com/files/2.5.3-crypto-sha1-hmac-pbkdf2.js to be included first.
-// Requires http://crypto-js.googlecode.com/files/2.5.3-crypto-sha1-hmac-pbkdf2.js to be included first.
+// Requires 2.5.3-crypto-sha1-hmac-pbkdf2.js to be included first.
+// Requires js-yaml-0.3.7.min.js to be included first.
 
 var lower   = "abcdefghijklmnopqrstuvwxyz";
 var upper   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -81,17 +81,26 @@ function trans_chars(str,from,to) {
 }
 
 function get_domain_reqs(domain) {
-  //TODO: parse yaml file
-  return {"use": "x,l,n,c", "exclude": " "};
+  var rsp = {};
+  if (!(domain in domainSpecs)) {
+    domain = "defaults";
+  }
+  var d = domainSpecs[domain];
+  rsp.use     = d.use;
+  rsp.exclude = d.require;
+  rsp.length  = d.max_length;
+  return rsp;
 }
 
-function gen_password(hashedMaster,salt,seq,domain,len) {
-    len=Math.ceil(len*6/8); 
+function gen_password(hashedMaster,salt,seq,domain) {
+    var reqs = get_domain_reqs(domain);
+
+    // Convert character length into byte lengths
+    var len = Math.ceil(reqs.length*6/8); 
     var foo =  Crypto.PBKDF2(hashedMaster,seq + domain + salt,len, {iterations: 2000, 
             asBytes: true,
             hasher: Crypto.SHA512});
     foo =  Crypto.util.bytesToBase64(foo);
-    var reqs = get_domain_reqs(domain);
     var set = char_set(reqs.use, reqs.exclude);
     var result = trans_chars(foo,upper+lower+num+"+/", set);
     return result;

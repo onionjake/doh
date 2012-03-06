@@ -3,6 +3,7 @@
 #The chromium plugin needs some setup before it can be used.
 
 cp javascript/doh.js chromium
+cp javascript/third_party/* chromium
 
 #not sure why -rjson doesn't work
 ruby -rrubygems -e 'require "json";require "yaml"; puts JSON.pretty_generate(YAML.load(File.open("domain_specs.yaml")))' > chromium/domain_specs.json

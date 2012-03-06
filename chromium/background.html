@@ -21,9 +21,16 @@
   <head>
     <script type="text/javascript" src="2.5.3-crypto-sha1-hmac-pbkdf2.js"></script>
     <script type="text/javascript" src="doh.js"></script>
+    <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
     <script>
       var DOHmaster = "";
       var DOHsalt = "";
+      var domainSpecs = null;
+
+      // Load in specs
+      $.getJSON(chrome.extension.getURL('domain_specs.json'), function (data) {
+        domainSpecs = data;
+      });
 
       function onRequest(request, sender, sendResponse) {
         // Requests are assumed they could be malicious. 
@@ -33,7 +40,7 @@
             //rsp.domain = sender.tab.url;
 
             //TODO: call function in doh.js to generate password
-            rsp.password = gen_password(DOHmaster,DOHsalt,"0",sender.tab.url,10);
+            rsp.password = gen_password(DOHmaster,DOHsalt,"0",sender.tab.url);
             sendResponse(rsp);
             break;
           default:
