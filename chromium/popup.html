@@ -21,6 +21,7 @@
 <html>
   <head>
     <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="2.5.3-crypto-sha256.js"></script>
     <script>
       var bg = chrome.extension.getBackgroundPage();
 
@@ -32,13 +33,14 @@
         }
       });
 
+      function setDOHmaster() {
+        bg.DOHmaster = Crypto.util.bytesToBase64(Crypto.SHA256($('#DOHsalt').val() + $('#DOHmaster').val(), {asBytes: true}));
+      }
+
     </script>
   </head>
   <body>
-    Master Password: <input type="password" id="DOHmaster" onkeyup="bg.DOHmaster = $('#DOHmaster').val()" />
-    Salt: <input type="text" id="DOHsalt" onkeyup="bg.DOHsalt = $('#DOHsalt').val()" />
+    Master Password: <input type="password" id="DOHmaster" onkeyup="setDOHmaster()" />
+    Salt: <input type="text" id="DOHsalt" onkeyup="bg.DOHsalt = $('#DOHsalt').val();setDOHmaster();" />
   </body>
 </html>
-  
-
-
