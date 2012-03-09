@@ -27,27 +27,24 @@ end
 
 p = PasswordGen.new CONFIG_FILE
 
-seq = 1
+seq = 0
 seq = ARGV[1] unless ARGV.size < 2
 
 
-print "Enter Salt:"
-salt = $stdin.gets
-puts ""
+print "Enter Salt: "
+salt = $stdin.gets.delete "\n"
 
-print "Enter Password:"
+print "Enter Password: "
 system "stty -echo"
-pwd = $stdin.gets
+pwd = $stdin.gets.delete "\n"
 system "stty echo"
 puts ""
 
 #TODO clean up interface with single function call
-h = p.gen salt,pwd, ARGV[0], seq
-r = p.mangle h,ARGV[0]
+final = p.gen_password(p.sha256(salt+pwd),salt, seq, ARGV[0].delete("\n"))
 
 #puts "***** Password ***** \n"
 #puts ""
 #puts ""
-puts r
+puts final
 #puts ""
-

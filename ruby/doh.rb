@@ -51,33 +51,37 @@ class PasswordGen
     end
   end
 
-  def gen s, sec, d, seq
-#    foo = Digest::SHA512.digest(s.to_s+sec.to_s+d.to_s+seq.to_s) 
-#    Base64.encode64(foo).delete "\n"
+  def gen_password hashed_master, salt, seq, domain
+    reqs = get_domain_reqs domain
+    len = (reqs['max_length'].to_f*6/8).ceil
     p = PBKDF2.new do |p|
-      p.password = sec
-      p.salt = s.to_s + d.to_s + seq.to_s
-      p.iterations = 5000
-      p.key_length = 100
+      p.password = hashed_master
+      p.salt = seq.to_s + domain + salt
+      p.iterations = 2000
+      p.key_length = len
       p.hash_function = "sha512"
     end.bin_string
-    Base64.encode64(p).delete "\n"
+    hash = Base64.encode64(p).delete "\n"
+    
+    mangle hash, reqs['use'],reqs['require'], reqs['exclude']
   end
 
-  def mangle hash,domain
+  def sha256 value
+    sha = Digest::SHA2.new(256)
+    Base64.encode64(sha.digest(value)).delete "\n"
+  end
+
+  def get_domain_reqs domain
     unless @config.has_key? domain
-      $stderr.puts "#{domain} was not found in configuration.  Output is unmangled"
-      return hash
+      $stderr.puts "#{domain} was not found in configuration.  Using defaults."
+      domain = "defaults"
     end
 
-    obj = @config[domain]
-
-    #pp obj
-    _mangle hash, obj['max_length'].to_i, obj['use'],obj['require'], obj['exclude']
+    @config[domain]
   end
 
-  def _mangle hash,len,use,req,exclude
-    len = hash.size if len > hash.size
+  def mangle hash,use,req,exclude
+    len = hash.size 
     even_split_amount = 64/use.split(',').size
     left = 64
     pos  = 0
