@@ -1,4 +1,6 @@
 
+Run "./setup" before trying to use chromium or html versions.
+
 Domain Hash Password Generator (DOH) generates perfect passwords that are unique to each domain, and are guaranteed to be accepted by the domain.  The algorithm does not save any state, so any computer you use can generate your passwords with information from your head -- without any syncing.
 
 Here is the algorithm in a nutshell:

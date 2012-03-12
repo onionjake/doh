@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+ * Copyright (c) 2012 Jake Willoughby
+ * 
+ * This file is part of DOH.
+ * 
+ * DOH is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * 
+ * DOH is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with DOH.  See gpl3.txt. If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+  <head>
+    <script type="text/javascript" src="../javascript/third_party/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="../javascript/third_party/2.5.3-crypto-sha1-hmac-pbkdf2.js"></script>
+    <script type="text/javascript" src="../javascript/doh.js"></script>
+    <script type="text/javascript" src="../javascript/third_party/2.5.3-crypto-sha256.js"></script>
+    <script>
+      var DOHmaster = "";
+      var DOHsalt = "";
+      var domainSpecs = null;
+
+      // Load in specs
+      $.getJSON('domain_specs.json', function (data) {
+        domainSpecs = data;
+      });
+
+      function setPassword() {
+        // Data in request may be malicious, so beware.
+        var rsp = {};
+
+        // Match top-level domain
+        var host = $("#DOHdomain").val().match(/([-A-Za-z0-9]+\.)*([-A-Za-z0-9]*\.[-A-Za-z0-9]+)/);
+        var val = "Invalid domain string";
+        if (host && 2 in host) {
+          val = gen_password(DOHmaster,DOHsalt,"0",host[2]);
+        }
+
+        $("#DOHpassword").val(val);
+      };
+
+      function setDOHmaster() {
+        DOHmaster = Crypto.util.bytesToBase64(Crypto.SHA256($('#DOHsalt').val() + $('#DOHmaster').val(), {asBytes: true}));
+      }
+    </script>
+  </head>
+  <body>
+    Master Password: <input type="password" id="DOHmaster" onkeyup="setDOHmaster()" /> <br />
+    Salt: <input type="text" id="DOHsalt" onkeyup="DOHsalt = $('#DOHsalt').val();setDOHmaster();" /> <br />
+    Domain: <input type="text" id="DOHdomain"/> <br /><br />
+    <input type="button" value="Generate password" onclick="setPassword()"/> <br />
+    Generated Password: <input type="text" id="DOHpassword" style="width: 600px"/> <br />
+
+  </body>
+</html>
