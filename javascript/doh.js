@@ -92,14 +92,28 @@ function get_domain_reqs(domain) {
   return rsp;
 }
 
-function gen_password(hashedMaster,salt,seq,domain) {
+function gen_password(opts) { //hashedMaster,salt,seq,domain) {
+    var hashedMaster = opts['hashedMaster'];
+    var salt = opts['salt'];
+    var seq = opts['seq'];
+    var domain = opts['domain'];
+    var hashFunction = opts['hashFunction'];
+    if (hashFunction == "sha1") {
+      hashFunction = Crypto.SHA1;
+    }
+    else if (hashFunction == "sha256") {
+      hashFunction = Crypto.SHA256;
+    }
+    else {
+      hashFunction = Crypto.SHA256;
+    }
     var reqs = get_domain_reqs(domain);
 
     // Convert character length into byte lengths
     var len = Math.ceil(reqs.length*6/8); 
     var foo =  Crypto.PBKDF2(hashedMaster,seq + domain + salt,len, {iterations: 2000, 
             asBytes: true,
-            hasher: Crypto.SHA512});
+            hasher: hashFunction});
     foo =  Crypto.util.bytesToBase64(foo);
     var set = char_set(reqs.use, reqs.exclude);
     var result = trans_chars(foo,upper+lower+num+"+/", set);

@@ -26,7 +26,9 @@
     <script>
       var DOHmaster = "";
       var DOHsalt = "";
+      var DOHhashFunction = "sha256";
       var domainSpecs = null;
+      var hasher = gen_password;
 
       // Load in specs
       $.getJSON('domain_specs.json', function (data) {
@@ -40,8 +42,14 @@
         // Match top-level domain
         var host = $("#DOHdomain").val().match(/([-A-Za-z0-9]+\.)*([-A-Za-z0-9]*\.[-A-Za-z0-9]+)/);
         var val = "Invalid domain string";
+
+        var opts = {'domain': host[2], 
+          'salt': DOHsalt,
+          'hashedMaster': DOHmaster,
+          'seq': "0", 
+          'hashFunction': DOHhashFunction};
         if (host && 2 in host) {
-          val = gen_password(DOHmaster,DOHsalt,"0",host[2]);
+          val = hasher(opts);
         }
 
         $("#DOHpassword").val(val);
@@ -49,6 +57,18 @@
 
       function setDOHmaster() {
         DOHmaster = Crypto.util.bytesToBase64(Crypto.SHA256($('#DOHsalt').val() + $('#DOHmaster').val(), {asBytes: true}));
+      }
+
+      function hasherChanged() {
+        var h = $('input:radio[name=hasher]:checked').val();
+        if (h == "DOHsha1") {
+          hasher = gen_password;
+          DOHhashFunction = "sha1";
+        }
+        else if (h == "DOHsha256") {
+          hasher = gen_password;
+          DOHhashFunction = "sha256";
+        }
       }
     </script>
   </head>
@@ -58,6 +78,10 @@
     Domain: <input type="text" id="DOHdomain"/> <br /><br />
     <input type="button" value="Generate password" onclick="setPassword()"/> <br />
     Generated Password: <input type="text" id="DOHpassword" style="width: 600px"/> <br />
+    <br />
+    <br />
+    <input type="radio" name="hasher" onchange="hasherChanged();" value="DOHsha1"> DOH - SHA1 <br />
+    <input type="radio" name="hasher" onchange="hasherChanged();" value="DOHsha256"> DOH - SHA256 <br />
 
   </body>
 </html>
