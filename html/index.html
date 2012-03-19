@@ -70,13 +70,26 @@
     </script>
   </head>
   <body>
-    Master Password: <input type="password" id="DOHmaster" onkeyup="setDOHmaster()" /> <br />
-    Salt: <input type="text" id="DOHsalt" onkeyup="DOHsalt = $('#DOHsalt').val();setDOHmaster();" /> <br />
-    Domain: <input type="text" id="DOHdomain"/> <br /><br />
+    <table>
+      <tr>
+        <td> Master Password: </td>
+        <td><input type="password" id="DOHmaster" onkeyup="setDOHmaster()" /></td>
+      </tr>
+      <tr>
+        <td>Salt:</td>
+        <td><input type="text" id="DOHsalt" onkeyup="DOHsalt = $('#DOHsalt').val();setDOHmaster();" /> </td>
+      </tr>
+      <tr>
+        <td>Domain:</td>
+        <td><input type="text" id="DOHdomain"/></td>
+      </tr>
+    </table>
+    <br />
     <input type="button" value="Generate password" onclick="setPassword()"/> <br />
     Generated Password: <input type="text" id="DOHpassword" style="width: 600px"/> <br />
     <br />
     <br />
+    Hashing method: <br />
     <input type="radio" name="hasher" onchange="hasherChanged();" value="DOHsha1"> DOH - SHA1 <br />
     <input type="radio" name="hasher" onchange="hasherChanged();" value="DOHsha256" checked> DOH - SHA256 <br />
 
