@@ -28,7 +28,7 @@
       var DOHsalt = "";
       var DOHhashFunction = "sha256";
       var domainSpecs = null;
-      var hasher = gen_password;
+      var hasher = DOH.gen_password;
 
       // Load in specs
       $.getJSON('domain_specs.json', function (data) {
@@ -36,9 +36,6 @@
       });
 
       function setPassword() {
-        // Data in request may be malicious, so beware.
-        var rsp = {};
-
         // Match top-level domain
         var host = $("#DOHdomain").val().match(/([-A-Za-z0-9]+\.)*([-A-Za-z0-9]*\.[-A-Za-z0-9]+)/);
         var val = "Invalid domain string";
@@ -62,11 +59,11 @@
       function hasherChanged() {
         var h = $('input:radio[name=hasher]:checked').val();
         if (h == "DOHsha1") {
-          hasher = gen_password;
+          hasher = DOH.gen_password;
           DOHhashFunction = "sha1";
         }
         else if (h == "DOHsha256") {
-          hasher = gen_password;
+          hasher = DOH.gen_password;
           DOHhashFunction = "sha256";
         }
       }
@@ -81,7 +78,7 @@
     <br />
     <br />
     <input type="radio" name="hasher" onchange="hasherChanged();" value="DOHsha1"> DOH - SHA1 <br />
-    <input type="radio" name="hasher" onchange="hasherChanged();" value="DOHsha256"> DOH - SHA256 <br />
+    <input type="radio" name="hasher" onchange="hasherChanged();" value="DOHsha256" checked> DOH - SHA256 <br />
 
   </body>
 </html>

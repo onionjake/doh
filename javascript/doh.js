@@ -19,12 +19,13 @@
 // Requires 2.5.3-crypto-sha1-hmac-pbkdf2.js to be included first.
 // Requires js-yaml-0.3.7.min.js to be included first.
 
+var DOH = new function() {
 var lower   = "abcdefghijklmnopqrstuvwxyz";
 var upper   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 var num     = "0123456789";
 var special = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
-function char_set(use,exclude) {
+var char_set = function(use,exclude) {
   var use_vals = use.split(',').sort();
   var even_split = Math.floor(64/use_vals.length);
   var left = 64;
@@ -73,14 +74,14 @@ function char_set(use,exclude) {
   return final_set;
 }
 
-function trans_chars(str,from,to) {
+var trans_chars = function(str,from,to) {
   var translate_re = new RegExp ("[" + from + "]", 'g');
   return (str.replace(translate_re, function(match) {
     return to.substr(translate_re.source.indexOf(match)-1,1); })
   );
 }
 
-function get_domain_reqs(domain) {
+var get_domain_reqs = function(domain) {
   var rsp = {};
   if (!(domain in domainSpecs)) {
     domain = "defaults";
@@ -92,7 +93,7 @@ function get_domain_reqs(domain) {
   return rsp;
 }
 
-function gen_password(opts) { //hashedMaster,salt,seq,domain) {
+this.gen_password = function(opts) { //hashedMaster,salt,seq,domain) {
     var hashedMaster = opts['hashedMaster'];
     var salt = opts['salt'];
     var seq = opts['seq'];
@@ -119,3 +120,4 @@ function gen_password(opts) { //hashedMaster,salt,seq,domain) {
     var result = trans_chars(foo,upper+lower+num+"+/", set);
     return result;
 }
+};
