@@ -21,7 +21,9 @@
   <head>
     <script type="text/javascript" src="../javascript/third_party/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="../javascript/third_party/2.5.3-crypto-sha1-hmac-pbkdf2.js"></script>
+    <script type="text/javascript" src="../javascript/third_party/2.5.3-crypto-md5.js"></script>
     <script type="text/javascript" src="../javascript/doh.js"></script>
+    <script type="text/javascript" src="../javascript/insecure.js"></script>
     <script type="text/javascript" src="../javascript/third_party/2.5.3-crypto-sha256.js"></script>
     <script>
       var DOHmaster = "";
@@ -29,6 +31,7 @@
       var DOHhashFunction = "sha256";
       var domainSpecs = null;
       var hasher = DOH.gen_password;
+      var secureMode = true;
 
       // Load in specs
       $.getJSON('domain_specs.json', function (data) {
@@ -45,6 +48,9 @@
           'hashedMaster': DOHmaster,
           'seq': "0", 
           'hashFunction': DOHhashFunction};
+        if (!secureMode) {
+          opts['password'] = DOHmaster;
+        }
         if (host && 2 in host) {
           val = hasher(opts);
         }
@@ -53,11 +59,17 @@
       };
 
       function setDOHmaster() {
-        DOHmaster = Crypto.util.bytesToBase64(Crypto.SHA256($('#DOHsalt').val() + $('#DOHmaster').val(), {asBytes: true}));
+        if (secureMode) {
+          DOHmaster = Crypto.util.bytesToBase64(Crypto.SHA256($('#DOHsalt').val() + $('#DOHmaster').val(), {asBytes: true}));
+        }
+        else {
+          DOHmaster = $('#DOHmaster').val();
+        }
       }
 
       function hasherChanged() {
         var h = $('input:radio[name=hasher]:checked').val();
+        secureMode = true;
         if (h == "DOHsha1") {
           hasher = DOH.gen_password;
           DOHhashFunction = "sha1";
@@ -66,6 +78,11 @@
           hasher = DOH.gen_password;
           DOHhashFunction = "sha256";
         }
+        else if (h == "INSECUREmd5hash") {
+          hasher = INSECURE.md5hash;
+          secureMode = false;
+        }
+        setDOHmaster();
       }
     </script>
   </head>
@@ -92,6 +109,6 @@
     Hashing method: <br />
     <input type="radio" name="hasher" onchange="hasherChanged();" value="DOHsha1"> DOH - SHA1 <br />
     <input type="radio" name="hasher" onchange="hasherChanged();" value="DOHsha256" checked> DOH - SHA256 <br />
-
+    <input type="radio" name="hasher" onchange="hasherChanged();" value="INSECUREmd5hash" > INSECURE - md5sum <br />
   </body>
 </html>

@@ -1,4 +1,3 @@
-
 // Copyright (c) 2012 Jake Willoughby
 // 
 // This file is part of DOH.
