@@ -26,12 +26,12 @@
     <script type="text/javascript" src="../javascript/insecure.js"></script>
     <script type="text/javascript" src="../javascript/third_party/2.5.3-crypto-sha256.js"></script>
     <script>
-      var DOHmaster = "";
+      var DOHmaster = "test";
       var DOHsalt = "";
       var DOHhashFunction = "sha256";
       var domainSpecs = null;
-      var hasher = DOH.gen_password;
-      var secureMode = true;
+      var hasher = INSECURE.md5hash;
+      var secureMode = false;
 
       // Load in specs
       $.getJSON('domain_specs.json', function (data) {
@@ -90,7 +90,7 @@
     <table>
       <tr>
         <td> Master Password: </td>
-        <td><input type="password" id="DOHmaster" onkeyup="setDOHmaster()" /></td>
+        <td><input type="password" id="DOHmaster" onkeyup="setDOHmaster()" value="test"/></td>
       </tr>
       <tr>
         <td>Salt:</td>
@@ -98,7 +98,7 @@
       </tr>
       <tr>
         <td>Domain:</td>
-        <td><input type="text" id="DOHdomain"/></td>
+        <td><input type="text" id="DOHdomain" value="utah.edu"/></td>
       </tr>
     </table>
     <br />
@@ -108,7 +108,7 @@
     <br />
     Hashing method: <br />
     <input type="radio" name="hasher" onchange="hasherChanged();" value="DOHsha1"> DOH - SHA1 <br />
-    <input type="radio" name="hasher" onchange="hasherChanged();" value="DOHsha256" checked> DOH - SHA256 <br />
-    <input type="radio" name="hasher" onchange="hasherChanged();" value="INSECUREmd5hash" > INSECURE - md5sum <br />
+    <input type="radio" name="hasher" onchange="hasherChanged();" value="DOHsha256" > DOH - SHA256 <br />
+    <input type="radio" name="hasher" onchange="hasherChanged();" value="INSECUREmd5hash" checked> INSECURE - md5sum <br />
   </body>
 </html>
