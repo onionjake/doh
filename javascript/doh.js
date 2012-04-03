@@ -82,10 +82,11 @@ this.trans_chars = function(str,from,to) {
 
 var get_domain_reqs = function(domain) {
   var rsp = {};
-  if (!(domain in domainSpecs)) {
+  var ds = DOH_UI.domainSpecs;
+  if (!(domain in ds)) {
     domain = "defaults";
   }
-  var d = domainSpecs[domain];
+  var d = ds[domain];
   rsp.use     = d.use;
   rsp.exclude = d.require;
   rsp.length  = d.max_length;
@@ -116,7 +117,7 @@ this.gen_password = function(opts) { //hashedMaster,salt,seq,domain) {
             hasher: hashFunction});
     foo =  Crypto.util.bytesToBase64(foo);
     var set = char_set(reqs.use, reqs.exclude);
-    var result = trans_chars(foo,upper+lower+num+"+/", set);
+    var result = DOH.trans_chars(foo,upper+lower+num+"+/", set);
     return result;
 }
 };

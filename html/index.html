@@ -22,79 +22,32 @@
     <script type="text/javascript" src="../javascript/third_party/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="../javascript/third_party/2.5.3-crypto-sha1-hmac-pbkdf2.js"></script>
     <script type="text/javascript" src="../javascript/third_party/2.5.3-crypto-md5.js"></script>
+    <script type="text/javascript" src="../javascript/third_party/2.5.3-crypto-sha256.js"></script>
     <script type="text/javascript" src="../javascript/doh.js"></script>
     <script type="text/javascript" src="../javascript/insecure.js"></script>
-    <script type="text/javascript" src="../javascript/third_party/2.5.3-crypto-sha256.js"></script>
+    <script type="text/javascript" src="../javascript/doh_ui.js"></script>
     <script>
-      var DOHmaster = "test";
-      var DOHsalt = "";
-      var DOHhashFunction = "sha256";
-      var domainSpecs = null;
-      var hasher = INSECURE.md5hash;
-      var secureMode = false;
-
-      // Load in specs
-      $.getJSON('domain_specs.json', function (data) {
-        domainSpecs = data;
-      });
-
+      DOH_UI.init();
       function setPassword() {
         // Match top-level domain
-        var host = $("#DOHdomain").val().match(/([-A-Za-z0-9]+\.)*([-A-Za-z0-9]*\.[-A-Za-z0-9]+)/);
-        var val = "Invalid domain string";
-
-        var opts = {'domain': host[2], 
-          'salt': DOHsalt,
-          'hashedMaster': DOHmaster,
-          'seq': "0", 
-          'hashFunction': DOHhashFunction};
-        if (!secureMode) {
-          opts['password'] = DOHmaster;
-        }
-        if (host && 2 in host) {
-          val = hasher(opts);
-        }
-
-        $("#DOHpassword").val(val);
-      };
-
-      function setDOHmaster() {
-        if (secureMode) {
-          DOHmaster = Crypto.util.bytesToBase64(Crypto.SHA256($('#DOHsalt').val() + $('#DOHmaster').val(), {asBytes: true}));
-        }
-        else {
-          DOHmaster = $('#DOHmaster').val();
-        }
-      }
-
-      function hasherChanged() {
         var h = $('input:radio[name=hasher]:checked').val();
-        secureMode = true;
-        if (h == "DOHsha1") {
-          hasher = DOH.gen_password;
-          DOHhashFunction = "sha1";
-        }
-        else if (h == "DOHsha256") {
-          hasher = DOH.gen_password;
-          DOHhashFunction = "sha256";
-        }
-        else if (h == "INSECUREmd5hash") {
-          hasher = INSECURE.md5hash;
-          secureMode = false;
-        }
-        setDOHmaster();
-      }
+        DOH_UI.setHost($("#DOHdomain").val());
+        DOH_UI.setHasher(h);
+        DOH_UI.setSalt($('#DOHsalt').val());
+        DOH_UI.setMaster($('#DOHmaster').val());
+        $("#DOHpassword").val(DOH_UI.getPassword());
+      };
     </script>
   </head>
   <body>
     <table>
       <tr>
         <td> Master Password: </td>
-        <td><input type="password" id="DOHmaster" onkeyup="setDOHmaster()" value="test"/></td>
+        <td><input type="password" id="DOHmaster" value="test"/></td>
       </tr>
       <tr>
         <td>Salt:</td>
-        <td><input type="text" id="DOHsalt" onkeyup="DOHsalt = $('#DOHsalt').val();setDOHmaster();" /> </td>
+        <td><input type="text" id="DOHsalt"/> </td>
       </tr>
       <tr>
         <td>Domain:</td>
@@ -107,8 +60,8 @@
     <br />
     <br />
     Hashing method: <br />
-    <input type="radio" name="hasher" onchange="hasherChanged();" value="DOHsha1"> DOH - SHA1 <br />
-    <input type="radio" name="hasher" onchange="hasherChanged();" value="DOHsha256" > DOH - SHA256 <br />
-    <input type="radio" name="hasher" onchange="hasherChanged();" value="INSECUREmd5hash" checked> INSECURE - md5sum <br />
+    <input type="radio" name="hasher" value="DOHsha1"> DOH - SHA1 <br />
+    <input type="radio" name="hasher" value="DOHsha256" > DOH - SHA256 <br />
+    <input type="radio" name="hasher" value="INSECUREmd5hash" checked> INSECURE - md5sum <br />
   </body>
 </html>
