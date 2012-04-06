@@ -25,13 +25,18 @@ var DOH_UI = new function() {
   var host = "";
   this.domainSpecs = "";
   var dohHashFunction = "sha256";
-  var selectedHasher = INSECURE.md5hash;
+  var selectedHasher = DOH.gen_password;
   var selectedHasherIsSecure = false;
 
-  this.init = function() {
-    $.getJSON('domain_specs.json', function (data) {
-      DOH_UI.domainSpecs = data;
-    });
+  this.init = function(domain_info) {
+    if (domain_info) {
+      this.domainSpecs = domain_info;
+    }
+    else {
+      $.getJSON('domain_specs.json', function (data) {
+        DOH_UI.domainSpecs = data;
+      });
+    }
   };
 
   var hostSource = function() {
@@ -42,6 +47,7 @@ var DOH_UI = new function() {
   };
 
   var getSalt = function() {
+    return salt;
   };
 
   this.getPassword = function() {

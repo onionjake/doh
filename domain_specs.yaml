@@ -20,22 +20,6 @@
 #Domain information defaults
 defaults: &defaults
   max_length: 20
-  min_length: 8
   use:        "c,l,n,x" #character classes to use
   require:    "l1,c1,n1" # required characters in character classes (and amount)
   exclude:    " " # Characters that cannot be used.
-
-"google.com":
-  max_length: 300
-  <<: *defaults
-  
-"utah.edu":
-  <<: *defaults
-
-"ent.test":
-  max_length: 10
-  min_length:  8
-  use:        "n"
-  require:    ""
-  <<: *defaults
-

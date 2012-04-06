@@ -26,8 +26,9 @@
     <script type="text/javascript" src="../javascript/doh.js"></script>
     <script type="text/javascript" src="../javascript/insecure.js"></script>
     <script type="text/javascript" src="../javascript/doh_ui.js"></script>
+    <script type="text/javascript" src="domain_specs.js"></script>
     <script>
-      DOH_UI.init();
+      DOH_UI.init(domain_specs);
       function setPassword() {
         // Match top-level domain
         var h = $('input:radio[name=hasher]:checked').val();
@@ -43,7 +44,7 @@
     <table>
       <tr>
         <td> Master Password: </td>
-        <td><input type="password" id="DOHmaster" value="test"/></td>
+        <td><input type="password" id="DOHmaster"/></td>
       </tr>
       <tr>
         <td>Salt:</td>
@@ -51,7 +52,7 @@
       </tr>
       <tr>
         <td>Domain:</td>
-        <td><input type="text" id="DOHdomain" value="utah.edu"/></td>
+        <td><input type="text" id="DOHdomain"/></td>
       </tr>
     </table>
     <br />
@@ -60,8 +61,8 @@
     <br />
     <br />
     Hashing method: <br />
-    <input type="radio" name="hasher" value="DOHsha1"> DOH - SHA1 <br />
-    <input type="radio" name="hasher" value="DOHsha256" > DOH - SHA256 <br />
-    <input type="radio" name="hasher" value="INSECUREmd5hash" checked> INSECURE - md5sum <br />
+    <input type="radio" name="hasher" value="DOHsha1"> DOH - SHA1 (broken in firefox)<br />
+    <input type="radio" name="hasher" value="DOHsha256" checked> DOH - SHA256 (broken in firefox)<br />
+    <input type="radio" name="hasher" value="INSECUREmd5hash"> INSECURE - md5sum (broken in firefox)<br />
   </body>
 </html>
