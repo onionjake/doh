@@ -24,7 +24,7 @@ var INSECURE = new function() {
     //echo ${salthash:12}
     // Openssl implementation from:
     //http://www.freebsd.org/cgi/cvsweb.cgi/~checkout~/src/lib/libcrypt/crypt.c?rev=1.2
-    var salt = Crypto.MD5(btoa(opts['domain']) + '\n').substring(0,8);
+    var salt = Crypto.MD5(btoa(opts['domain'] + opts['seq']) + '\n').substring(0,8);
     var tmp = Crypto.MD5(opts['password'] + salt + opts['password'], {asBytes:true});
     var str = opts['password'] + "$1$" + salt;
     str = Crypto.charenc.Binary.stringToBytes(str);

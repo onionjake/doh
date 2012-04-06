@@ -20,17 +20,14 @@
 <html>
   <head>
     <script type="text/javascript" src="2.5.3-crypto-sha1-hmac-pbkdf2.js"></script>
-    <script type="text/javascript" src="doh.js"></script>
+    <script type="text/javascript" src="2.5.3-crypto-md5.js"></script>
+    <script type="text/javascript" src="2.5.3-crypto-sha256.js"></script>
     <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="doh.js"></script>
+    <script type="text/javascript" src="insecure.js"></script>
+    <script type="text/javascript" src="doh_ui.js"></script>
     <script>
-      var DOHmaster = "";
-      var DOHsalt = "";
-      var domainSpecs = null;
-
-      // Load in specs
-      $.getJSON(chrome.extension.getURL('domain_specs.json'), function (data) {
-        domainSpecs = data;
-      });
+      DOH_UI.init();
 
       function onRequest(request, sender, sendResponse) {
         // Data in request may be malicious, so beware.
@@ -46,7 +43,8 @@
               sendResponse({"error": "invalid command"});
             }
             else {
-              rsp.password = gen_password(DOHmaster,DOHsalt,"0",host[2]);
+              DOH_UI.setHost(host[2]);
+              rsp.password = DOH_UI.getPassword();
               sendResponse(rsp);
             }
 

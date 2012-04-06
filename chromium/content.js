@@ -16,14 +16,23 @@
 // along with DOH.  See gpl3.txt. If not, see <http://www.gnu.org/licenses/>.
 //
 
-$('document').ready(function () {
-  var fields = $("input[type=password]");
-  if (fields.size() > 0) {
-    // Ask background page for password
-    chrome.extension.sendRequest({"command": "getPassword"}, function(response) {
-      fields.each(function(i,e) {
-        $(e).val(response.password);
-      });
-    });
+var FillKey = 90; // alt + z
+window.addEventListener('keyup',keyboardNavigation, false);
+function keyboardNavigation(e) {
+  switch(e.which) {
+    case FillKey:
+      if (e.altKey) {
+        var fields = $("input[type=password]");
+        if (fields.size() > 0) {
+          // Ask background page for password
+          chrome.extension.sendRequest({"command": "getPassword"}, function(response) {
+            fields.each(function(i,e) {
+              $(e).val(response.password);
+            });
+          });
+        }
+      }
+      break;
   }
-});
+}
+

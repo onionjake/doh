@@ -23,9 +23,11 @@ var DOH_UI = new function() {
   var masterHash = "";
   var salt = "";
   var host = "";
+  var seq = "";
   this.domainSpecs = "";
   var dohHashFunction = "sha256";
   var selectedHasher = DOH.gen_password;
+  var selectedHasherString = "DOHsha256";
   var selectedHasherIsSecure = false;
 
   this.init = function(domain_info) {
@@ -46,16 +48,23 @@ var DOH_UI = new function() {
     return host;
   };
 
-  var getSalt = function() {
+  this.getSalt = function() {
     return salt;
+  };
+
+  this.isSetMaster = function() {
+    if (masterHash != "") {
+      return true;
+    }
+    return false;
   };
 
   this.getPassword = function() {
     var host = getHost();
     var opts = {'domain': host, 
-      'salt': getSalt(),
+      'salt': DOH_UI.getSalt(),
       'hashedMaster': masterHash,
-      'seq': "0", 
+      'seq': DOH_UI.getSequence(), 
       'hashFunction': dohHashFunction};
     if (!selectedHasherIsSecure) {
       opts['password'] = master;
@@ -66,14 +75,25 @@ var DOH_UI = new function() {
     return "Invalid domain string.";
   };
   this.setMaster = function(password) {
+    if (password == "") {
+      return;
+    }
     if (!selectedHasherIsSecure) {
       master = password;
     }
-    masterHash = Crypto.util.bytesToBase64(Crypto.SHA256(getSalt() + password, {asBytes: true}));
+    masterHash = Crypto.util.bytesToBase64(Crypto.SHA256(DOH_UI.getSalt() + password, {asBytes: true}));
   };
+
+  this.setSequence = function(sequenceString) {
+    seq = sequenceString;
+  }
+  this.getSequence = function() {
+    return seq;
+  }
 
   this.setHasher = function(hasherString) {
     var h = hasherString;
+    selectedHasherString = h;
     selectedHasherIsSecure = true;
     if (h == "DOHsha1") {
       selectedHasher = DOH.gen_password;
@@ -87,6 +107,9 @@ var DOH_UI = new function() {
       selectedHasher = INSECURE.md5hash;
       selectedHasherIsSecure = false;
     }
+  };
+  this.getHasher = function() {
+    return selectedHasherString;
   };
   
   this.setSalt = function(s) {

@@ -35,6 +35,7 @@
         DOH_UI.setHost($("#DOHdomain").val());
         DOH_UI.setHasher(h);
         DOH_UI.setSalt($('#DOHsalt').val());
+        DOH_UI.setSequence($('#DOHseq').val());
         DOH_UI.setMaster($('#DOHmaster').val());
         $("#DOHpassword").val(DOH_UI.getPassword());
       };
@@ -53,6 +54,10 @@
       <tr>
         <td>Domain:</td>
         <td><input type="text" id="DOHdomain"/></td>
+      </tr>
+      <tr>
+        <td>Sequence String:</td>
+        <td><input type="text" id="DOHseq"/></td>
       </tr>
     </table>
     <br />
