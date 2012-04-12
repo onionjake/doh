@@ -1,0 +1,9 @@
+{
+    "name": "doh", 
+    "license": "GPL 3.0", 
+    "author": "Jake Willoughby", 
+    "version": "0.1", 
+    "fullName": "doh", 
+    "id": "doh", 
+    "description": "a basic add-on"
+}
