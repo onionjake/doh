@@ -107,6 +107,10 @@ var DOH_UI = new function() {
       selectedHasher = INSECURE.md5hash;
       selectedHasherIsSecure = false;
     }
+    else if (h == "INSECUREangel") {
+      selectedHasher = INSECURE.angel;
+      selectedHasherIsSecure = false;
+    }
   };
   this.getHasher = function() {
     return selectedHasherString;

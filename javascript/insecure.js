@@ -16,6 +16,14 @@
 // along with DOH.  See gpl3.txt. If not, see <http://www.gnu.org/licenses/>.
 
 var INSECURE = new function() {
+  this.angel = function(opts) {
+    //Algorithm used at http://angel.net/~nic/passwd.current.html 
+    return Crypto.util.bytesToBase64(Crypto.SHA1(opts['password'] + ":" + opts['domain'], {asBytes: true})).substring(0,8) + "1a";
+  };
+    
+
+
+
   this.md5hash = function(opts) {
     //Original algorithm:  (domain used as salt)
     //#!/bin/bash
