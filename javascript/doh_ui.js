@@ -28,7 +28,7 @@ var DOH_UI = new function() {
   var dohHashFunction = "sha256";
   var selectedHasher = DOH.gen_password;
   var selectedHasherString = "DOHsha256";
-  var selectedHasherIsSecure = false;
+  var selectedHasherIsSecure = true;
 
   this.init = function(domain_info) {
     if (domain_info) {
