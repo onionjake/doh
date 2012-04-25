@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "Browse to http://localhost:9876. Capture the browser. Then start the tests."
+java -jar JsTestDriver-1.3.4.b.jar --port 9876  --browser `which chromium-browser`,`which firefox`,`which epiphany-browser`
