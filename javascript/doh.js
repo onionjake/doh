@@ -76,7 +76,7 @@ var char_set = function(use,exclude) {
 this.trans_chars = function(str,from,to) {
   var translate_re = new RegExp ("[" + from + "]", 'g');
   return (str.replace(translate_re, function(match) {
-    return to.substr(translate_re.source.indexOf(match)-1,1); })
+    return to.substr(from.indexOf(match),1); })
   );
 }
 
