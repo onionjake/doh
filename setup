@@ -9,6 +9,3 @@ cp javascript/third_party/* chromium
 
 #not sure why -rjson doesn't work
 ruby -rrubygems -e 'require "json";require "yaml"; puts JSON.pretty_generate(YAML.load(File.open("domain_specs.yaml")))' > chromium/domain_specs.json
-
-# html needs the json copy as well
-cp chromium/domain_specs.json html/
