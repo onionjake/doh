@@ -23,3 +23,6 @@ defaults: &defaults
   use:        "c,l,n,x" #character classes to use
   require:    "l1,c1,n1" # required characters in character classes (and amount)
   exclude:    " " # Characters that cannot be used.
+disa.mil:
+  exclude:    " _-+={}[]|\\/'\""
+  <<: *defaults
