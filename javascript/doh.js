@@ -70,6 +70,12 @@ var char_set = function(use,exclude) {
         alert("Bad use string " + use);
     }
   }
+
+  var exclude_re = new RegExp ("[" + RegExp.escape(exclude) + "]", 'g');
+  final_set = final_set.replace(exclude_re,'');
+  while (final_set.length < 64) {
+    final_set += final_set;
+  }
   return final_set;
 }
 
@@ -80,6 +86,11 @@ this.trans_chars = function(str,from,to) {
   );
 }
 
+// Thanks to: http://simonwillison.net/2006/jan/20/escape/
+RegExp.escape = function(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+
 var get_domain_reqs = function(domain) {
   var rsp = {};
   var ds = DOH_UI.domainSpecs;
@@ -88,7 +99,7 @@ var get_domain_reqs = function(domain) {
   }
   var d = ds[domain];
   rsp.use     = d.use;
-  rsp.exclude = d.require;
+  rsp.exclude = d.exclude;
   rsp.length  = d.max_length;
   return rsp;
 }
