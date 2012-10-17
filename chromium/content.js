@@ -16,28 +16,10 @@
 // along with DOH.  See gpl3.txt. If not, see <http://www.gnu.org/licenses/>.
 //
 
-var FillKey = 90; // alt + z
-window.addEventListener('keyup',keyboardNavigation, false);
-
-$(document).on('click', 'span.doh_fill' function() { 
-    $(this).prev('input').val('foo foo');
-    });
-function keyboardNavigation(e) {
-  switch(e.which) {
-    case FillKey:
-      if (e.altKey) {
-        var fields = $("input[type=password]");
-        fields.before('<span class="doh_field">').after("<span class='doh_fill'>DOH it!</span></span>");
-        if (fields.size() > 0) {
-          // Ask background page for password
-          chrome.extension.sendRequest({"command": "getPassword"}, function(response) {
-            fields.each(function(i,e) {
-              $(e).val(response.password);
-            });
-          });
-        }
-      }
-      break;
-  }
-}
-
+$(document).on('click', 'span.doh_fill', function() { 
+  var pwd = $(this).prev('input');
+  chrome.extension.sendRequest({"command": "getPassword"}, function(response) {
+    pwd.val(response.password);
+  });
+});
+$("input[type=password]").wrap('<span class="doh_field">').after("<span class='doh_fill'>DOH it!</span></span>");

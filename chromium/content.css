@@ -2,7 +2,10 @@ span.doh_field{
   position:relative;
 }
 input[type=password]{
-  padding-right:17px; /* add space for the 'doh it' text*/
+  /* This was used to make sure there was space for our text
+   * (i.e. your password wouldn't go underneath the 'doh' text)
+   * It makes the password field bigger and looks ghetto. */
+/*  padding-right:17px; /* add space for the 'doh it' text*/
 }
 span.doh_fill{
   position:absolute;
