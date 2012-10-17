@@ -15,6 +15,7 @@
         "https://*/*"
       ],
       "js" : ["jquery-1.7.1.min.js","content.js"],
+      "css": ["content.css"],
       "run_at" : "document_idle",
       "all_frames" : false
     }

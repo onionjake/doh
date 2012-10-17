@@ -1,0 +1,21 @@
+span.doh_field{
+  position:relative;
+}
+input[type=password]{
+  padding-right:17px; /* add space for the 'doh it' text*/
+}
+span.doh_fill{
+  position:absolute;
+  right:10px;
+  top: 2px;
+  /*display:none;*/
+  opacity: 1;
+
+  /* now go with the styling */
+  cursor:pointer;
+  font: bold 1em sans-serif;
+  color:#38468F;  
+}
+span.doh_fill:hover{
+  color:#f52;
+}
