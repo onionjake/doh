@@ -63,7 +63,18 @@ function add_doh_text (pwd_input,fade) {
   var doh_text = $('#doh_text' + doh_i );
   doh_text.css({
     display: "inline",
-    opacity: fade 
+    opacity: fade,
+    cursor:  'pointer' ,
+    font:    'bold 1em sans-serif',
+    color:   '#38468F'  
+  }).hover( function () {
+    $(this).css({
+      color: '#f52'
+    });
+  }, function() {
+    $(this).css({
+      color:   '#38468F'  
+    });
   });
   doh_text.position({
     my:  "right top",
