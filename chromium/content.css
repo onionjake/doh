@@ -1,20 +1,4 @@
-span.doh_field{
-  position:relative;
-}
-input[type=password]{
-  /* This was used to make sure there was space for our text
-   * (i.e. your password wouldn't go underneath the 'doh' text)
-   * It makes the password field bigger and looks ghetto. */
-/*  padding-right:17px; /* add space for the 'doh it' text*/
-}
-span.doh_fill{
-  position:absolute;
-  right:10px;
-  top: 2px;
-  /*display:none;*/
-  opacity: 1;
-
-  /* now go with the styling */
+div.doh_fill{
   cursor:pointer;
   font: bold 1em sans-serif;
   color:#38468F;  

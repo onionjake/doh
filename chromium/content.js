@@ -16,10 +16,68 @@
 // along with DOH.  See gpl3.txt. If not, see <http://www.gnu.org/licenses/>.
 //
 
-$(document).on('click', 'span.doh_fill', function() { 
+$(document).on('click', 'div.doh_fill', function() { 
   var pwd = $(this).prev('input');
+  var text = $(this);
+  text.text('');
+  var opts = {
+    lines: 7, // The number of lines to draw
+    length: 1, // The length of each line
+    width: 3, // The line thickness
+    radius: 2, // The radius of the inner circle
+    corners: 1, // Corner roundness (0..1)
+    rotate: 0, // The rotation offset
+    color: '#000', // #rgb or #rrggbb
+    speed: 1, // Rounds per second
+    trail: 64, // Afterglow percentage
+    shadow: false, // Whether to render a shadow
+    hwaccel: false, // Whether to use hardware acceleration
+    className: 'spinner', // The CSS class to assign to the spinner
+    zIndex: 2e9, // The z-index (defaults to 2000000000)
+    top: '1', // Top position relative to parent in px
+    left: '30' // Left position relative to parent in px
+  };
+  var spinner = new Spinner(opts).spin();
+  text.next().append(spinner.el);
+  text.next().position({
+    my:  "left",
+    at:  "right top",
+    of:  pwd,
+    offset: "-10 10",
+    collision: "none"
+  });
   chrome.extension.sendRequest({"command": "getPassword"}, function(response) {
     pwd.val(response.password);
+    spinner.stop();
+    text.text('Done!');
   });
 });
-$("input[type=password]").wrap('<span class="doh_field">').after("<span class='doh_fill'>DOH it!</span></span>");
+
+function add_doh_wrap () {
+  add_doh_text($(this), 1.0);
+}
+
+var doh_i = 0;
+function add_doh_text (pwd_input,fade) {
+  pwd_input.after("<div id='doh_text" + doh_i + "' " + " class='doh_fill'>DOH it!</div><div class='doh_spinner" + doh_i + "'></div>");
+  var doh_text = $('#doh_text' + doh_i );
+  doh_text.css({
+    display: "inline",
+    opacity: fade 
+  });
+  doh_text.position({
+    my:  "right top",
+    at:  "right top",
+    of:  pwd_input,
+    offset: "-3 3",
+    collision: "none"
+  });
+  doh_i = doh_i + 1;
+} 
+$("input[type=password]").each(add_doh_wrap);
+$(document).on('mouseover focus', 'input[type=password]', function () {
+  if ($(this).next().attr('class') != "doh_fill") {
+    add_doh_text($(this), 0.0);
+    $(this).next().stop().fadeTo(300,1);
+  }
+});
