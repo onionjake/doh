@@ -46,12 +46,27 @@ $(document).on('click', 'div.doh_fill', function() {
     offset: "-10 10",
     collision: "none"
   });
-  chrome.extension.sendRequest({"command": "getPassword"}, function(response) {
-    pwd.val(response.password);
-    spinner.stop();
-    text.text('Done!');
-  });
+  if ($.browser.webkit) {
+    // Chrome/chromium
+    chrome.extension.sendRequest({"command": "getPassword"}, function(response) {
+      pwd.val(response.password);
+      spinner.stop();
+      text.text('Done!');
+    });
+  }
+  else {
+    // Firefox
+    console.log("Message to add-on");
+    self.port.emit("requestPassword", pwd.attr("id"));
+  }
 });
+if (!$.browser.webkit) {
+  console.log("Setup-firefox");
+  self.port.on("getPassword", function(id,password) {
+    console.log("Message from add-on");
+    $('#'+id).val(password);
+  });
+}
 
 function add_doh_wrap () {
   add_doh_text($(this), 1.0);
