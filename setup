@@ -8,4 +8,5 @@ cp javascript/insecure.js chromium
 cp javascript/third_party/* chromium
 
 #not sure why -rjson doesn't work
-ruby -rrubygems -e 'require "json";require "yaml"; puts JSON.pretty_generate(YAML.load(File.open("domain_specs.yaml")))' > chromium/domain_specs.json
+/usr/bin/ruby -rrubygems -e 'require "json";require "yaml"; puts JSON.pretty_generate(YAML.load(File.open("domain_specs.yaml")))' > chromium/domain_specs.json
+cp chromium/domain_specs.json firefox/data/domain_specs.json
