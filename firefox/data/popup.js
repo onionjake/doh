@@ -1,9 +1,14 @@
 // domain_specs is set in domain_specs.js
 DOH_UI.init(domain_specs);
 
-self.port.on("requestPassword", function (host,tab_index,input_id) {
+self.port.on("requestPassword", function (host,tab_index,input_id,worker) {
     console.log("Panel sending password to add-on");
+    console.log("worker " + worker);
     DOH_UI.setHost(host);
+    console.log(DOH_UI.getSalt());
+    console.log(DOH_UI.getSequence());
+    console.log(DOH_UI.getHasher());
+    console.log(DOH_UI.isSetMaster());
     self.port.emit("getPassword", host, tab_index, DOH_UI.getPassword(), input_id);
     });
 
