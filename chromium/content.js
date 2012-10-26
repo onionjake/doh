@@ -38,7 +38,7 @@ $(document).on('click', 'div.doh_fill', function() {
     left: '30' // Left position relative to parent in px
   };
   var spinner = new Spinner(opts).spin();
-  text.next().append(spinner.el);
+  text.next().append(spinner.el).data('spinner', spinner);
   text.next().position({
     my:  "left",
     at:  "right top",
@@ -64,7 +64,12 @@ if (!$.browser.webkit) {
   console.log("Setup-firefox");
   self.port.on("getPassword", function(id,password) {
     console.log("Message from add-on");
-    $('#'+id).val(password);
+    var pwd_input = $('#'+id);
+    var text = pwd_input.next();
+    var spinner = text.next();
+    pwd_input.val(password);
+    text.text('Done!');
+    spinner.data('spinner').stop();
   });
 }
 
