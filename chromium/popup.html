@@ -22,40 +22,18 @@
   <head>
     <script type="text/javascript" src="jquery-1.8.2.js"></script>
     <script type="text/javascript" src="2.5.3-crypto-sha256.js"></script>
-    <script>
-      var bg = chrome.extension.getBackgroundPage();
-
-      // Load back in values from background page
-      $(document).ready(function () {
-        $("#DOHsalt").val(bg.DOH_UI.getSalt());
-        $("#DOHseq").val(bg.DOH_UI.getSequence());
-        if (bg.DOH_UI.isSetMaster()) {
-          $("#DOHmaster")[0].placeholder = "<unchanged>";
-        }
-        $("input:radio[name=hasher][value=" + bg.DOH_UI.getHasher() + "]").attr('checked', true);
-      });
-
-      function setInfo() {
-        // Match top-level domain
-        var h = $('input:radio[name=hasher]:checked').val();
-        bg.DOH_UI.setHasher(h);
-        bg.DOH_UI.setSalt($('#DOHsalt').val());
-        bg.DOH_UI.setSequence($('#DOHseq').val());
-        bg.DOH_UI.setMaster($('#DOHmaster').val());
-      };
-    </script>
+    <script type="text/javascript" src="popup.js"></script>
   </head>
   <body>
-    Master Password: <input type="password" id="DOHmaster" onkeyup="setInfo()" />
-    Salt: <input type="text" id="DOHsalt" onkeyup="setInfo();" />
-    Sequence String: <input type="text" id="DOHseq" onkeyup="setInfo();" />
+    Master Password: <input type="password" id="DOHmaster" />
+    Salt: <input type="text" id="DOHsalt" />
+    Sequence String: <input type="text" id="DOHseq" />
     <br />
     <br />
 
-    <input type="radio" name="hasher" value="DOHsha1" onchange="setInfo()" > DOH - SHA1 <br />
-    <input type="radio" name="hasher" value="DOHsha256" onchange="setInfo()" checked> DOH - SHA256 <br />
-    <input type="radio" name="hasher" value="INSECUREmd5hash" onchange="setInfo()"> INSECURE - md5sum <br />
-    <input type="radio" name="hasher" value="INSECUREangel" onchange="setInfo()"> INSECURE - angel <br />
-
+    <input type="radio" name="hasher" id="DOHsha1" value="DOHsha1" > DOH - SHA1 <br />
+    <input type="radio" name="hasher" id="DOHsha256" value="DOHsha256" checked> DOH - SHA256 <br />
+    <input type="radio" name="hasher" id="INSECUREmd5hash" value="INSECUREmd5hash" > INSECURE - md5sum <br />
+    <input type="radio" name="hasher" id="INSECUREangel" value="INSECUREangel" > INSECURE - angel <br />
   </body>
 </html>
