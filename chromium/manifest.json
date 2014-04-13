@@ -1,8 +1,12 @@
 {
   "name" : "DOH password generator",
   "version" : "0.1",
+  "manifest_version" : 2,
   "description" : "Fills in passwords given salt and master password.",
-  "background_page" : "background.html",
+  "background" : {
+    "page" : "background.html",
+    "persistent": true
+  },
   "browser_action": {
     "default_icon": "doh-19.png",
     "default_title": "DOH password manager",
