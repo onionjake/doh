@@ -2,7 +2,7 @@
 
 The Domain Hash Password Generator (DOH) is a solution to your passwords problem.  All you need to remember is a master password and a salt (something not secret, but fairly unique and memorable).  The passwords that DOH generates are secure, so you don't need to worry about someone figuring out your master password -- even if individual websites have their databases hacked and a password is compromised.
 
-DOH generates passwords based on a domain, master password, and salt.  Each site has different passwords, and DOH can generate passwords that are guaranteed to have the right number of special characters, uppcase letters, numbers, etc.  The algorithm does not save any state, so any computer you use can generate your passwords with information from your head -- without any syncing.  This also means there is no database to be hacked or service provider you need to trust.
+DOH generates passwords based on a domain, master password, and salt.  Each site has different passwords, and DOH can generate passwords that are guaranteed to have the right number of special characters, uppercase letters, numbers, etc.  The algorithm does not save any state, so any computer you use can generate your passwords with information from your head -- without any syncing.  This also means there is no database to be hacked or service provider you need to trust.
 
 DOH is entirely opensource, so you can audit the code yourself to make sure your passwords are safe.
 
@@ -14,9 +14,56 @@ The following have been implemented:
 
 ##Installation
 
-Run "./setup" before trying to use chromium or html versions.
+You need some flavor of ruby installed (it converts the yaml file to json).
 
+    git clone https://github.com/onionjake/doh.git
+    cd doh
+    ./setup
 
+### Chromium Plugin
+
+    <launch chrome/chromium>
+    Type in 'chrome://extensions' in the address bar
+    Check 'Developer mode'
+    Load unpacked extension
+    Browse to 'doh/chromium' and click Open
+    
+### HTML (any browser)
+
+    <launch browser>
+    Type 'file://<cloned location>/doh/html/index.html' into the address bar
+    
+    
+## Terminology
+
+Master Password:  Your secret password.  This should be long, secure, and follow all good password conventions.
+
+Salt:  This is something unique to you.  It does not need to be secret or hard to guess, just memorable.  Something like your email address or your favorite online username is good.
+
+Domain: This is part of the URL of the website.  It does not include www or anything else ahead of the domain.
+
+Examples: 
+
+https://www.github.com/onionjake/doh - github.com
+          
+https://login.yahoo.com - yahoo.com
+
+## Use
+
+### Chromium Plugin
+
+    TODO    
+
+### HTML (any browser)
+
+    Read terminology section above
+    Enter Master Password
+    Enter Salt
+    Enter Domain
+    Enter Seqeunce String (optional)
+    Click 'Generate Password'
+    Copy and paste generated password into website.
+    
 ## The algorithm
 
 Here is the algorithm in a nutshell:
@@ -31,6 +78,10 @@ Here is the algorithm in a nutshell:
 \* Where '+' is concatenation.  See http://en.wikipedia.org/wiki/PBKDF2 on PBKDF2 function definition.
 
 The expected number of characters needed to fulfill typical password requirements is 10 characters. Determining each domain's expected number of minimum characters to meet requirements can be done using the coupon collectors problem.
+
+## Domain Specifications
+
+TODO
 
 ## License
 
