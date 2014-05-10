@@ -17,9 +17,16 @@
  * You should have received a copy of the GNU General Public License
  * along with DOH.  See gpl3.txt. If not, see <http://www.gnu.org/licenses/>.
 -->
-<html>
+<html lang="en">
   <head>
-    <script type="text/javascript" src="../javascript/third_party/jquery-1.7.1.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DOH password generator</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <script type="text/javascript" src="../javascript/third_party/jquery-1.8.2.js"></script>
     <script type="text/javascript" src="../javascript/third_party/2.5.3-crypto-sha1-hmac-pbkdf2.js"></script>
     <script type="text/javascript" src="../javascript/third_party/2.5.3-crypto-md5.js"></script>
     <script type="text/javascript" src="../javascript/third_party/2.5.3-crypto-sha256.js"></script>
@@ -42,26 +49,27 @@
     </script>
   </head>
   <body>
-    <table>
-      <tr>
-        <td> Master Password: </td>
-        <td><input type="password" id="DOHmaster"/></td>
-      </tr>
-      <tr>
-        <td>Salt:</td>
-        <td><input type="text" id="DOHsalt"/> </td>
-      </tr>
-      <tr>
-        <td>Domain:</td>
-        <td><input type="text" id="DOHdomain"/></td>
-      </tr>
-      <tr>
-        <td>Sequence String:</td>
-        <td><input type="text" id="DOHseq"/></td>
-      </tr>
-    </table>
+  <div class="container">
+    <h1> DOH password generator </h1>
+    <div class="row">
+      <div class="col-md-2"> Master Password: </div>
+      <div class="col-md-2"><input type="password" id="DOHmaster"/></div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">Salt:</div>
+      <div class="col-md-2"><input type="text" id="DOHsalt"/> </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">Domain:</div>
+      <div class="col-md-2"><input type="text" id="DOHdomain"/></div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">Sequence String:</div>
+      <div class="col-md-2"><input type="text" id="DOHseq"/></div>
+    </div>
     <br />
     <input type="button" value="Generate password" onclick="setPassword()"/> <br />
+    <br />
     Generated Password: <input type="text" id="DOHpassword" style="width: 600px"/> <br />
     <br />
     <br />
@@ -70,5 +78,8 @@
     <input type="radio" name="hasher" value="DOHsha256" checked> DOH - SHA256 <br />
     <input type="radio" name="hasher" value="INSECUREmd5hash"> INSECURE - md5sum <br />
     <input type="radio" name="hasher" value="INSECUREangel"> INSECURE - angel <br />
-  </body>
+
+    <script src="js/bootstrap.min.js"></script>
+  </div>
+</body>
 </html>
