@@ -6,6 +6,14 @@ DOH generates passwords based on a domain, master password, and salt.  Each site
 
 DOH is entirely opensource, so you can audit the code yourself to make sure your passwords are safe.
 
+After installation, the patented "DOH it!" button appears in password fields.
+
+![Username](https://raw.githubusercontent.com/amozoss/doh/master/images/username.png)
+
+Pressing "DOH it!" instantly generates your secure password. 
+
+![Password](https://raw.githubusercontent.com/amozoss/doh/master/images/password_generated.png)
+
 The following have been implemented:
 
 * Pure javascript HTML webpage generator
