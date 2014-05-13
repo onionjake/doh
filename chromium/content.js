@@ -38,7 +38,7 @@ $(document).on('click', 'div.doh_fill', function() {
     left: '30' // Left position relative to parent in px
   };
   var spinner = new Spinner(opts).spin();
-  text.next().append(spinner.el);
+  text.next().append(spinner.el).data('spinner', spinner);
   text.next().position({
     my:  "left",
     at:  "right top",
@@ -46,12 +46,32 @@ $(document).on('click', 'div.doh_fill', function() {
     offset: "-10 10",
     collision: "none"
   });
-  chrome.extension.sendRequest({"command": "getPassword"}, function(response) {
-    pwd.val(response.password);
-    spinner.stop();
-    text.text('Done!');
-  });
+  if ($.browser.webkit) {
+    // Chrome/chromium
+    chrome.extension.sendRequest({"command": "getPassword"}, function(response) {
+      pwd.val(response.password);
+      spinner.stop();
+      text.text('Done!');
+    });
+  }
+  else {
+    // Firefox
+    console.log("Message to add-on");
+    self.port.emit("requestPassword", pwd.attr("id"));
+  }
 });
+if (!$.browser.webkit) {
+  console.log("Setup-firefox");
+  self.port.on("getPassword", function(id,password) {
+    console.log("Message from add-on");
+    var pwd_input = $('#'+id);
+    var text = pwd_input.next();
+    var spinner = text.next();
+    pwd_input.val(password);
+    text.text('Done!');
+    spinner.data('spinner').stop();
+  });
+}
 
 function add_doh_wrap () {
   add_doh_text($(this), 1.0);
@@ -63,7 +83,18 @@ function add_doh_text (pwd_input,fade) {
   var doh_text = $('#doh_text' + doh_i );
   doh_text.css({
     display: "inline",
-    opacity: fade 
+    opacity: fade,
+    cursor:  'pointer' ,
+    font:    'bold 1em sans-serif',
+    color:   '#38468F'  
+  }).hover( function () {
+    $(this).css({
+      color: '#f52'
+    });
+  }, function() {
+    $(this).css({
+      color:   '#38468F'  
+    });
   });
   doh_text.position({
     my:  "right top",

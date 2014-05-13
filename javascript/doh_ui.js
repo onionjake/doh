@@ -17,6 +17,7 @@
 
 
 // Requires jquery.
+var DOH = require('doh');
 
 var DOH_UI = new function() {
   var master = "";
@@ -129,3 +130,7 @@ var DOH_UI = new function() {
     }
   };
 };
+
+exports.init = DOH_UI.init;
+exports.getSalt = DOH_UI.getSalt;
+exports.setSalt = DOH_UI.setSalt;

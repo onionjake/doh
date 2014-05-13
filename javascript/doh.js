@@ -132,3 +132,7 @@ this.gen_password = function(opts) { //hashedMaster,salt,seq,domain) {
     return result;
 }
 };
+
+// for firefox
+exports.trans_chars = DOH.trans_chars;
+exports.gen_password = DOH.gen_password;

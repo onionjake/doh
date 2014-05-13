@@ -6,3 +6,5 @@ var domain_specs = {
     "require": "l1,c1,n1"
   }
 };
+
+exports.domain_specs = domain_specs;
