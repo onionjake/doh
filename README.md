@@ -1,16 +1,16 @@
 # DOmain Hash password generator (DOH)
 
-The Domain Hash Password Generator (DOH) is a solution to your passwords problem.  All you need to remember is a master password and a salt (something not secret, but fairly unique and memorable).  The passwords that DOH generates are secure, so you don't need to worry about someone figuring out your master password -- even if individual websites have their databases hacked and a password is compromised.
+The Domain Hash Password Generator (DOH) uses hashes to generate unique passwords for each domain from a single master password.
 
-DOH generates passwords based on a domain, master password, and salt.  Each site has different passwords, and DOH can generate passwords that are guaranteed to have the right number of special characters, uppercase letters, numbers, etc.  The algorithm does not save any state, so any computer you use can generate your passwords with information from your head -- without any syncing.  This also means there is no database to be hacked or service provider you need to trust.
+## Features
 
-DOH is entirely opensource, so you can audit the code yourself to make sure your passwords are safe.
+* Passwords are cryptographically secure.
+* Passwords are never stored anywhere. Not even on your own computer.
+* Passwords are guaranteed to be accepted by the website.\*
+* Passwords are reproducible from a single master password.
+* Multiple hashing strategies are available.
 
-The following have been implemented:
-
-* Pure javascript HTML webpage generator
-* Chromium plugin
-* Firefox plugin (unfinished; see branches)
+\* Given a correct domain specification (see below).
 
 ## Visuals
 
@@ -21,6 +21,18 @@ After installation, the patented "DOH it!" button appears in password fields.
 Pressing "DOH it!" instantly generates your secure password. 
 
 ![Password](https://raw.githubusercontent.com/amozoss/doh/master/images/password_generated.png)
+
+## Description
+
+DOH generates passwords based on a domain, master password, and salt.  Each site has different passwords, and DOH can generate passwords that are guaranteed to have the right number of special characters, uppercase letters, numbers, etc.  The algorithm does not save any state, so any computer you use can generate your passwords with information from your head -- without any syncing.  This also means there is no database to be hacked or service provider you need to trust.
+
+DOH is entirely opensource, so you can audit the code yourself to make sure your passwords are safe.
+
+The following have been implemented:
+
+* Pure javascript HTML webpage generator
+* Chromium plugin
+* Firefox plugin (unfinished; see branches)
 
 
 
