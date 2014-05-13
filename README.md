@@ -56,6 +56,8 @@ You need some flavor of ruby installed (it converts the yaml file to json).
 
     <launch browser>
     Type 'file://<cloned location>/doh/html/index.html' into the address bar
+    <or>
+    Goto 'https://onionjake.github.io/doh/'
     
     
 ## Terminology
