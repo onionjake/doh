@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 # Copyright (c) 2016 Jake Willoughby
 #
 # This file is part of DOH.
@@ -14,17 +15,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with DOH.  See gpl3.txt. If not, see <http://www.gnu.org/licenses/>.
-defaults: &defaults
-  length: 20
-  chars:  " !\"#$%&'()*+,-./0123456789:;ABCDEFGHIJKLMNOPQRabcdefghijklmnopqr"
+require "json"
+require "yaml" 
+require "pp"
 
-foo:
-  <<: *defaults
-  require:
-    1:
-      - "ABCDEFGHIJKLMNOPQR"
-    2:
-      - "ABC"
-      - "!"
-disa.mil:
-  <<: *defaults
+$specs = YAML.load(File.open("domain_specs.yaml"))
+
+puts JSON.pretty_generate($specs)

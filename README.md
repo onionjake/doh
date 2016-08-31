@@ -95,7 +95,7 @@ https://login.yahoo.com - yahoo.com
 Here is the algorithm in a nutshell:
 
 1. User enters salt (username, name, or something memorable but unique), master password, and domain, and an optional sequence number.
-2. Compute PBKDF2(sha512, sha256(salt + master password), sequence + domain + salt, 2000, <varies on domain spec>) and output in base64.*
+2. Compute PBKDF2(sha512, sha256(salt + master password), sequence + domain + salt, 2000, <varies on domain spec>) and output in base64.\*  Remove padding characters ('=').
 3. Based on a domain specification (shipped with program or provided by user), translate standard base64 to a new base64 with characters from the required character set for given domain.
 4. Search result for password that meets all requirements set in the domain spec.
 5. If password cannot be found, rotate a bit and search again.
@@ -111,7 +111,7 @@ TODO
 
 ## License
 
-Copyright (c) 2012 Jake Willoughby
+Copyright (c) 2016 Jake Willoughby
 
 This file is part of DOH.
 
