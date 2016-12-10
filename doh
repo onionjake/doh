@@ -24,7 +24,10 @@ require "yaml"
 
 require_relative "./doh"
 
-SCRIPT_DIR = File.dirname(File.readlink(__FILE__))
+file = __FILE__
+file = File.readlink(file) if File.symlink? file
+
+SCRIPT_DIR = File.dirname(file)
 
 def red(s)
   "\e[31m#{s}\e[0m"
