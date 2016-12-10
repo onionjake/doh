@@ -65,6 +65,8 @@ puts
 
 $pin_attempts = 0
 
+xclip = File.exist?("/usr/bin/xclip")
+
 
 while true
   print "Domain: "
@@ -103,11 +105,13 @@ while true
   puts yellow("#{' '*pwd.index(' ')}/---- Note: don't forget to include the space") if pwd =~ / /
   puts pwd
 
-  Open3.popen2("xclip -i -selection clipboard") do |i,o,t|
-    i.print pwd
-    i.flush
-    i.close
-    t.value
+  if xclip
+    Open3.popen2("xclip -i -selection clipboard") do |i,o,t|
+      i.print pwd
+      i.flush
+      i.close
+      t.value
+    end
   end
 
   puts
