@@ -66,6 +66,7 @@ puts
 $pin_attempts = 0
 
 xclip = File.exist?("/usr/bin/xclip")
+pbcopy = File.exist?("/usr/bin/pbcopy")
 
 
 while true
@@ -107,6 +108,14 @@ while true
 
   if xclip
     Open3.popen2("xclip -i -selection clipboard") do |i,o,t|
+      i.print pwd
+      i.flush
+      i.close
+      t.value
+    end
+  end
+  if pbcopy
+    Open3.popen2("pbcopy") do |i,o,t|
       i.print pwd
       i.flush
       i.close
