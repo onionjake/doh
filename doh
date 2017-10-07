@@ -102,25 +102,33 @@ while true
 
   pwd = doh(myspec, ss, seq, domain, salt, iterations, myspec['length'], digest)
 
-  puts yellow("Generated Password:")
-  puts yellow("#{' '*pwd.index(' ')}/---- Note: don't forget to include the space") if pwd =~ / /
-  puts pwd
-
-  if xclip
-    Open3.popen2("xclip -i -selection clipboard") do |i,o,t|
-      i.print pwd
-      i.flush
-      i.close
-      t.value
-    end
+  File.open(ENV["HOME"] + "/.dohlog",'a') do |f|
+    f.puts "#{DateTime.now} #{domain} #{seq}"
   end
-  if pbcopy
-    Open3.popen2("pbcopy") do |i,o,t|
-      i.print pwd
-      i.flush
-      i.close
-      t.value
+
+
+  if xclip || pbcopy
+    if xclip
+      Open3.popen2("xclip -i -selection clipboard") do |i,o,t|
+        i.print pwd
+        i.flush
+        i.close
+        t.value
+      end
     end
+    if pbcopy
+      Open3.popen2("pbcopy") do |i,o,t|
+        i.print pwd
+        i.flush
+        i.close
+        t.value
+      end
+    end
+    puts "Password Copied to clipboard."
+  else
+    puts yellow("Generated Password:")
+    puts yellow("#{' '*pwd.index(' ')}/---- Note: don't forget to include the space") if pwd =~ / /
+    puts pwd
   end
 
   puts
