@@ -28,3 +28,7 @@ foo:
       - "!"
 disa.mil:
   <<: *defaults
+
+comcast.net:
+  <<: *defaults
+  length: 16

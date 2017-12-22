@@ -71,7 +71,7 @@ pbcopy = File.exist?("/usr/bin/pbcopy")
 
 while true
   print "Domain: "
-  domain = $stdin.gets
+  domain = $stdin.gets.strip
   unless domain
     puts red("Error: no domain given")
   end
@@ -82,7 +82,7 @@ while true
     myspec = $specs["defaults"]
   end
   print "Sequence: "
-  seq = $stdin.gets
+  seq = $stdin.gets.strip
   seq = "" unless seq
 
   print "Pin: "
