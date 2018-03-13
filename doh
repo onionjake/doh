@@ -78,6 +78,7 @@ while true
 
   if $specs.has_key? domain
     myspec = $specs[domain]
+    puts "got domain"
   else
     myspec = $specs["defaults"]
   end
@@ -100,6 +101,7 @@ while true
   end
   $pin_attempts = 0
 
+  puts myspec['length']
   pwd = doh(myspec, ss, seq, domain, salt, iterations, myspec['length'], digest)
 
   File.open(ENV["HOME"] + "/.dohlog",'a') do |f|

@@ -32,3 +32,21 @@ disa.mil:
 comcast.net:
   <<: *defaults
   length: 16
+
+ally.com:
+  <<: *defaults
+  chars:  "Z!\"#$%&'()*+,-./0123456789:;ABCDEFGHIJKLMNOPQRabcdefghijklmnopqr"
+
+aliexpress.com:
+  <<: *defaults
+  # 0 and 1 are duplicated which actually reduces entropy a bit
+  chars: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01"
+
+walmart.com:
+  <<: *defaults
+  length: 12
+
+geico.com:
+  <<: *defaults
+  length: 16
+  chars:  "s!t#$%&u()*v,-.x0123456789:;ABCDEFGHIJKLMNOPQRabcdefghijklmnopqr"
