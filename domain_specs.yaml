@@ -49,4 +49,4 @@ walmart.com:
 geico.com:
   <<: *defaults
   length: 16
-  chars:  "s!t#$%&u()*v,-.x0123456789:;ABCDEFGHIJKLMNOPQRabcdefghijklmnopqr"
+  chars:  "s!t#$%&u()*vw-yx0123456789zZABCDEFGHIJKLMNOPQRabcdefghijklmnopqr"

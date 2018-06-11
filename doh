@@ -21,6 +21,7 @@ require "base64"
 require "open3"
 require 'io/console'
 require "yaml"
+require 'date'
 
 require_relative "./doh"
 
